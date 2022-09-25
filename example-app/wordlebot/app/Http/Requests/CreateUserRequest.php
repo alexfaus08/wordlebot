@@ -25,7 +25,7 @@ class CreateUserRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'phone_number' => 'required|string'
+            'phone_number' => 'required|string',
         ];
     }
 }

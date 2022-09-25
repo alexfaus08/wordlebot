@@ -7,7 +7,7 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public function index(): User
+    public function index()
     {
         return User::all();
     }
@@ -18,6 +18,7 @@ class UserController extends Controller
         $user = new User();
         $user->fill($data);
         $user->save();
+
         return $user;
     }
 }
