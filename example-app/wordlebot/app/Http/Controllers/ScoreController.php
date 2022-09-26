@@ -29,7 +29,7 @@ class ScoreController extends Controller
 
             // The score is the number before the slash
             $scoreCount = $scoreLine[0];
-            $scoreValue = $scoreCount === 'X' ? 0 : $scoreCount;
+            $scoreValue = $scoreCount === 'X' ? 7 : $scoreCount;
 
             $score = new Score(['value' => $scoreValue]);
             $score->user()->associate($user);
