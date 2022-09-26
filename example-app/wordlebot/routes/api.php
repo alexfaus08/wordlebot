@@ -19,3 +19,6 @@ Route::post('/user', [\App\Http\Controllers\UserController::class, 'store']);
 
 // Score Routes
 Route::post('/score', [\App\Http\Controllers\ScoreController::class, 'store']);
+
+// Scoreboard Route
+Route::post('/scoreboard', \App\Http\Controllers\ScoreBoardController::class);
