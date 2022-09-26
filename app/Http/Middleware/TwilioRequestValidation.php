@@ -24,11 +24,11 @@ class TwilioRequestValidation
             // You can get your authentication token in your twilio console https://www.twilio.com/console
             $requestValidator = new RequestValidator(env('TWILIO_AUTH_TOKEN'));
 
-            $requestData = $request->toArray();
+            $requestData = $request->all();
 
             // Switch to the body content if this is a JSON request.
             if (array_key_exists('bodySHA256', $requestData)) {
-                $requestData = $request->getContent();
+                $requestData = json_decode($request->getContent(), true);
             }
 
             $isValid = $requestValidator->validate(
