@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Score;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
 use Twilio\Rest\Client;
 
 class TwilioService
@@ -11,10 +12,8 @@ class TwilioService
     public function sendMessage(string $to, string $body): void
     {
         $twilioActive = getenv('TWILIO_ACTIVE');
-        $isProduction = getenv('APP_ENV') === 'local';
         $twilioActive = $twilioActive === 'true';
-        $isProduction = $isProduction === 'true';
-        if ($twilioActive || $isProduction) {
+        if ($twilioActive || App::environment('production')) {
             $accountSid = getenv('TWILIO_SID');
             $authToken = getenv('TWILIO_AUTH_TOKEN');
             $phoneNum = getenv('TWILIO_NUMBER');
@@ -38,12 +37,11 @@ class TwilioService
             }
             $previousScore = $scores[$i]->value;
             $scoreValue = $scores[$i]->value === 0 ? 'X' : $scores[$i]->value;
-            $rankings[] = ['place' => $this->addOrdinalNumberSuffix($currentPlace), 'name' => $scores[$i]->user->name, 'score' => $scoreValue . '/6'];
+            $rankings[] = ['place' => $this->addOrdinalNumberSuffix($currentPlace), 'name' => $scores[$i]->user->name, 'score' => $scoreValue.'/6'];
         }
         $message = 'Today\'s Leaderboard:';
-        foreach ($rankings as $ranking)
-        {
-            $message = $message . PHP_EOL . $ranking['place'] . ' - ' . $ranking['name'] . ' ' . $ranking['score'];
+        foreach ($rankings as $ranking) {
+            $message = $message.PHP_EOL.$ranking['place'].' - '.$ranking['name'].' '.$ranking['score'];
         }
         /** Sample Message
          * Today's Leaderboard:
