@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\TwilioRequest;
 use App\Models\User;
 
 class UserController extends Controller
@@ -12,11 +12,10 @@ class UserController extends Controller
         return User::all();
     }
 
-    public function store(CreateUserRequest $request): User
+    public function store(TwilioRequest $request): User
     {
         $data = $request->validated();
-        $user = new User();
-        $user->fill($data);
+        $user = new User(['name' => $data['body'], 'phone_number' => $data['from']]);
         $user->save();
 
         return $user;

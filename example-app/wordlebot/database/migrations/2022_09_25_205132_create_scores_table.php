@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('scores', function (Blueprint $table) {
             $table->id();
-            $table->string('phone_number', 12)->unique();
-            $table->string('name', 50);
+            $table->tinyInteger('value');
+            $table->foreignIdFor(\App\Models\User::class)->constrained();
+            $table->timestamps();
         });
     }
 
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('scores');
     }
 };

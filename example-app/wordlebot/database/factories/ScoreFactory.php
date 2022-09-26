@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Score>
  */
-class UserFactory extends Factory
+class ScoreFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,8 +17,7 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'name' => fake()->name(),
-            'phone_number' => $this->faker->e164PhoneNumber(),
+            'value' => $this->faker->numberBetween(1, 6),
         ];
     }
 }
