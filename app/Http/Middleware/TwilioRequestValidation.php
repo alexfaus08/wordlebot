@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Http\Requests\TwilioRequest;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -11,7 +10,14 @@ use Twilio\Security\RequestValidator;
 
 class TwilioRequestValidation
 {
-    public function handle(TwilioRequest $request, Closure $next)
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     */
+    public function handle(Request $request, Closure $next)
     {
         if (App::isProduction()) {
             // Be sure TWILIO_AUTH_TOKEN is set in your .env file.
@@ -19,6 +25,11 @@ class TwilioRequestValidation
             $requestValidator = new RequestValidator(env('TWILIO_AUTH_TOKEN'));
 
             $requestData = $request->toArray();
+
+            // Switch to the body content if this is a JSON request.
+            if (array_key_exists('bodySHA256', $requestData)) {
+                $requestData = $request->getContent();
+            }
 
             $isValid = $requestValidator->validate(
                 $request->header('X-Twilio-Signature'),
