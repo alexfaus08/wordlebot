@@ -23,9 +23,13 @@ class ScoreController extends Controller
 
                 return \response('Score already submitted for today.', Response::HTTP_CONFLICT);
             }
-            $scoreLines = explode(PHP_EOL, $data['body']);
-            $scoreCount = count($scoreLines) - 2;
-            $score = new Score(['value' => $scoreCount]);
+            // Split the Wordle score and get the 'Wordle ### X/6' line
+            $wordleLines = explode(PHP_EOL, $data['body']);
+            $scoreLine = explode(' ', $wordleLines[0])[2];
+            // The score is just the number before the slash
+            $scoreCount = $scoreLine[0];
+            $scoreValue = $scoreCount === 'X' ? 0 : $scoreCount;
+            $score = new Score(['value' => $scoreValue]);
             $score->user()->associate($user);
             $score->save();
 
