@@ -26,9 +26,11 @@ class ScoreController extends Controller
             // Split the Wordle score and get the 'Wordle ### X/6' line
             $wordleLines = explode(PHP_EOL, $data['body']);
             $scoreLine = explode(' ', $wordleLines[0])[2];
-            // The score is just the number before the slash
+
+            // The score is the number before the slash
             $scoreCount = $scoreLine[0];
             $scoreValue = $scoreCount === 'X' ? 0 : $scoreCount;
+
             $score = new Score(['value' => $scoreValue]);
             $score->user()->associate($user);
             $score->save();
