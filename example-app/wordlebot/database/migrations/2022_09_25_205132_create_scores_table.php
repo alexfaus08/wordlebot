@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('scores', function (Blueprint $table) {
             $table->id();
-            $table->string('score', 1);
+            $table->tinyInteger('value');
             $table->foreignIdFor(\App\Models\User::class)->constrained();
             $table->timestamps();
         });

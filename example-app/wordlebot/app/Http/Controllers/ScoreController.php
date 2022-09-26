@@ -25,7 +25,7 @@ class ScoreController extends Controller
             }
             $scoreLines = explode(PHP_EOL, $data['body']);
             $scoreCount = count($scoreLines) - 2;
-            $score = new Score(['score' => $scoreCount]);
+            $score = new Score(['value' => $scoreCount]);
             $score->user()->associate($user);
             $score->save();
 
