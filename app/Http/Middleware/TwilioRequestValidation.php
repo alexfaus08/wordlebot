@@ -26,10 +26,10 @@ class TwilioRequestValidation
 
             $requestData = $request->toArray();
 
-            // Switch to the body content if this is a JSON request.
-            if (array_key_exists('bodySHA256', $requestData)) {
-                $requestData = $request->getContent();
-            }
+//            // Switch to the body content if this is a JSON request.
+//            if (array_key_exists('bodySHA256', $requestData)) {
+//                $requestData = $request->getContent();
+//            }
 
             $isValid = $requestValidator->validate(
                 $request->header('X-Twilio-Signature'),
