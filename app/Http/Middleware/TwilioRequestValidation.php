@@ -31,8 +31,6 @@ class TwilioRequestValidation
                 $requestData = $request->getContent();
             }
 
-            return new Response($requestData, 403);
-
             $isValid = $requestValidator->validate(
                 $request->header('X-Twilio-Signature'),
                 $request->fullUrl(),
