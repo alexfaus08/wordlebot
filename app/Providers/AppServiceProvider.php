@@ -26,8 +26,5 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(Kernel $kernel)
     {
-        if (App::environment('production')) {
-            $kernel->pushMiddleware(TwilioRequestValidation::class);
-        }
     }
 }
