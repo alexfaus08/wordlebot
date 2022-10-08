@@ -35,7 +35,7 @@ class ScoreController extends Controller
             $score->user()->associate($user);
             $score->save();
 
-            $twilioService->sendMessage($user->phone_number, 'Score has been submitted.');
+            $twilioService->sendScoreBoardMessage($user->phone_number);
 
             return \response('', Response::HTTP_CREATED);
         }

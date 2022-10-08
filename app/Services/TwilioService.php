@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Score;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Twilio\Rest\Client;
@@ -43,6 +44,19 @@ class TwilioService
         foreach ($rankings as $ranking) {
             $message = $message.PHP_EOL.$ranking['place'].' - '.$ranking['name'].' '.$ranking['score'];
         }
+
+        $usersWhoHaveNotPlayed = $this->getUsersWhoHaveNotPlayerToday();
+        $notPlayedMessage = '';
+        for ($u = 0; $u < count($usersWhoHaveNotPlayed); $u++) {
+            if ($u == count($usersWhoHaveNotPlayed) - 1) {
+                $notPlayedMessage .= 'and ';
+                $notPlayedMessage .= $usersWhoHaveNotPlayed[$u]->name;
+            } else {
+                $notPlayedMessage .= $usersWhoHaveNotPlayed[$u]->name;
+                $notPlayedMessage .= ', ';
+            }
+        }
+        $message .= PHP_EOL . PHP_EOL . 'Not played yet: ' . $notPlayedMessage;
         /** Sample Message
          * Today's Leaderboard:
         1st - Paul (2/6)
@@ -53,6 +67,16 @@ class TwilioService
         $this->sendMessage($to, $message);
 
         return $message;
+    }
+
+    private function getUsersWhoHaveNotPlayerToday() {
+        $usersPlayedToday = Score::whereDate('created_at', Carbon::today())
+            ->select('user_id')
+            ->get();
+        $usersNotPlayedToday = User::whereNotIn('id', $usersPlayedToday)
+            ->select('name')
+            ->get();
+        return $usersNotPlayedToday;
     }
 
     private function addOrdinalNumberSuffix($num)
