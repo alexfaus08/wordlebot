@@ -32,6 +32,10 @@ class TwilioService
         $rankings = [];
         $previousScore = null;
         $currentPlace = 0;
+        if (count($scores) === 0) {
+            $this->sendMessage($to, 'No one has played today :(');
+            return 'No one has played today :(';
+        }
         for ($i = 0; $i < count($scores); $i++) {
             if ($scores[$i]->value !== $previousScore) {
                 $currentPlace += 1;
@@ -46,36 +50,37 @@ class TwilioService
         }
 
         $usersWhoHaveNotPlayed = $this->getUsersWhoHaveNotPlayerToday();
-        $notPlayedMessage = '';
-        for ($u = 0; $u < count($usersWhoHaveNotPlayed); $u++) {
-            if ($u == count($usersWhoHaveNotPlayed) - 1) {
-                $notPlayedMessage .= 'and ';
-                $notPlayedMessage .= $usersWhoHaveNotPlayed[$u]->name;
+        if (count($usersWhoHaveNotPlayed) > 0) {
+            $notPlayedMessage = '';
+            if (count($usersWhoHaveNotPlayed) === 1) {
+                $notPlayedMessage = $usersWhoHaveNotPlayed[0]->name;
             } else {
-                $notPlayedMessage .= $usersWhoHaveNotPlayed[$u]->name;
-                $notPlayedMessage .= ', ';
+                for ($u = 0; $u < count($usersWhoHaveNotPlayed); $u++) {
+                    if ($u == count($usersWhoHaveNotPlayed) - 1) {
+                        $notPlayedMessage .= 'and ';
+                        $notPlayedMessage .= $usersWhoHaveNotPlayed[$u]->name;
+                    } else {
+                        $notPlayedMessage .= $usersWhoHaveNotPlayed[$u]->name;
+                        $notPlayedMessage .= ', ';
+                    }
+                }
             }
+            $message .= PHP_EOL.PHP_EOL.'Not played yet: '.$notPlayedMessage;
         }
-        $message .= PHP_EOL . PHP_EOL . 'Not played yet: ' . $notPlayedMessage;
-        /** Sample Message
-         * Today's Leaderboard:
-        1st - Paul (2/6)
-        2nd - Amy (3/6)
-        3rd - Jenny (4/6)
-        3rd - Alex (4/6)
-         */
+
         $this->sendMessage($to, $message);
 
         return $message;
     }
 
-    private function getUsersWhoHaveNotPlayerToday() {
+    public function getUsersWhoHaveNotPlayerToday()
+    {
         $usersPlayedToday = Score::whereDate('created_at', Carbon::today())
             ->select('user_id')
             ->get();
         $usersNotPlayedToday = User::whereNotIn('id', $usersPlayedToday)
-            ->select('name')
             ->get();
+
         return $usersNotPlayedToday;
     }
 

@@ -3,8 +3,6 @@
 namespace App\Providers;
 
 use App\Http\Kernel;
-use App\Http\Middleware\TwilioRequestValidation;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
