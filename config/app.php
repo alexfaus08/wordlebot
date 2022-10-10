@@ -69,6 +69,8 @@ return [
     |
     */
 
+    // set to central because of most of the family being there.
+
     'timezone' => 'America/Chicago',
 
     /*
