@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('wordlebot:send-reminder-to-play')->dailyAt('17:00');
+        $schedule->command('wordlebot:send-weekly-scoreboard-message')->mondays()->at('12:00');
     }
 
     /**
