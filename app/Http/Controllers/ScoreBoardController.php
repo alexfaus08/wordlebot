@@ -24,9 +24,9 @@ class ScoreBoardController extends Controller
             $twilioService = new TwilioService();
             $message = $twilioService->sendScoreBoardMessage($user->phone_number);
 
-            return \response($message, Response::HTTP_OK);
+            return response($message, Response::HTTP_OK);
         }
 
-        return \response('User not found', Response::HTTP_NOT_FOUND);
+        return response('User not found', Response::HTTP_NOT_FOUND);
     }
 }
