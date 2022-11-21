@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Middleware\TwilioRequestValidation;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,12 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// User Routes
-Route::get('/user', [\App\Http\Controllers\UserController::class, 'index']);
-Route::post('/user', [\App\Http\Controllers\UserController::class, 'store']);
+Route::middleware([TwilioRequestValidation::class])->group(function () {
+    // User Routes
+    Route::get('/user', [\App\Http\Controllers\UserController::class, 'index']);
+    Route::post('/user', [\App\Http\Controllers\UserController::class, 'store']);
 
-// Score Routes
-Route::post('/score', [\App\Http\Controllers\ScoreController::class, 'store']);
+    // Score Routes
+    Route::post('/score', [\App\Http\Controllers\ScoreController::class, 'store']);
 
-// Scoreboard Route
-Route::post('/scoreboard', \App\Http\Controllers\ScoreBoardController::class);
+    // Scoreboard Route
+    Route::post('/scoreboard', \App\Http\Controllers\ScoreBoardController::class);
+});
