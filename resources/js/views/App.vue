@@ -2,7 +2,7 @@
 </script>
 
 <template>
-    <div class="text-slate-400 text-5xl p-10">
-        Wordlebot
-    </div>
+  <div class="p-10 text-5xl text-slate-400">
+    Wordlebot
+  </div>
 </template>
