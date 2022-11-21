@@ -13,6 +13,7 @@ use App\Http\Middleware\TwilioRequestValidation;
 |
 */
 
+// Routes Used by Twilio
 Route::middleware([TwilioRequestValidation::class])->group(function () {
     // User Routes
     Route::get('/user', [\App\Http\Controllers\UserController::class, 'index']);
@@ -24,3 +25,7 @@ Route::middleware([TwilioRequestValidation::class])->group(function () {
     // Scoreboard Route
     Route::post('/scoreboard', \App\Http\Controllers\ScoreBoardController::class);
 });
+
+// Frontend Routes
+Route::get('/score', [\App\Http\Controllers\ScoreController::class, 'index']);
+Route::get('/score/today', \App\Http\Controllers\TodayScoreController::class);
