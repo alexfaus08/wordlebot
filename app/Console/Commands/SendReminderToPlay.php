@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Services\ScoreBoardGeneratorService;
 use App\Services\TwilioService;
 use Illuminate\Console\Command;
 
@@ -29,7 +30,8 @@ class SendReminderToPlay extends Command
     public function handle()
     {
         $twilioService = new TwilioService();
-        $notYetPlayed = $twilioService->getUsersWhoHaveNotPlayerToday();
+        $scoreCalculator = new ScoreBoardGeneratorService();
+        $notYetPlayed = $scoreCalculator->getUsersWhoHaveNotPlayerToday();
         $message = 'Don\'t forget to play Wordle today!'.'https://www.nytimes.com/games/wordle/index.html';
         foreach ($notYetPlayed as $user) {
             $twilioService->sendMessage($user->phone_number, $message);
