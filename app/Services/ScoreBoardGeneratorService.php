@@ -39,13 +39,21 @@ class ScoreBoardGeneratorService
         $endOfWeek = $now->copy()->subDays()->endOfDay();
         // This should be a Monday
         $startOfWeek = $now->copy()->subDays(7);
-        $scores = Score::whereBetween('created_at', [$startOfWeek, $endOfWeek])
+
+        return self::getScoreboardInRange($startOfWeek, $endOfWeek, 'Last Week\'s Scoreboard:');
+    }
+
+    public function getScoreboardInRange(Carbon $startDate, Carbon $endDate, string $title)
+    {
+        $scores = Score::whereBetween('created_at', [$startDate, $endDate])
             ->orderBy('user_id')
             ->orderBy('created_at')
             ->get();
         $allUsers = User::all();
-        $totalDays = 7;
-        $weeklyScores = [];
+
+        $totalDays = $endDate->diffInDays($startDate) + 1;
+        $scoresWithUser = [];
+
         foreach ($allUsers as $user) {
             $userScores = $scores->filter(function ($score) use ($user) {
                 return $score->user_id === $user->id;
@@ -53,13 +61,15 @@ class ScoreBoardGeneratorService
             $penalties = $totalDays - count($userScores);
             $penalties = $penalties * 7;
             $totalScore = $userScores->sum('value') + $penalties;
-            $weeklyScores[] = ['user' => $user, 'value' => $totalScore];
+            $scoresWithUser[] = ['user' => $user, 'value' => $totalScore];
         }
-        $sorted = array_values(Arr::sort($weeklyScores, function ($score) {
+        $sorted = array_values(Arr::sort($scoresWithUser, function ($score) {
             return $score['value'];
         }));
-        $weeklyScoresCollection = collect($sorted);
-        return self::sortedScoresToScoreboard($weeklyScoresCollection, 'Last Week\'s Scoreboard:', false);
+
+        $scoresCollection = collect($sorted);
+
+        return self::sortedScoresToScoreboard($scoresCollection, $title, false);
     }
 
     // $sortedScores are scores sorted in ascending order
