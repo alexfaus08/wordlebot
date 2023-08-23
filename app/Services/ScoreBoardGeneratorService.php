@@ -43,7 +43,7 @@ class ScoreBoardGeneratorService
         return self::getScoreboardInRange($startOfWeek, $endOfWeek, 'Last Week\'s Scoreboard:');
     }
 
-    public function getScoreboardInRange(Carbon $startDate, Carbon $endDate, string $title)
+    public function getScoresWithUsersInRange(Carbon $startDate, Carbon $endDate)
     {
         $scores = Score::whereBetween('created_at', [$startDate, $endDate])
             ->orderBy('user_id')
@@ -67,7 +67,12 @@ class ScoreBoardGeneratorService
             return $score['value'];
         }));
 
-        $scoresCollection = collect($sorted);
+        return collect($sorted);
+    }
+
+    public function getScoreboardInRange(Carbon $startDate, Carbon $endDate, string $title)
+    {
+        $scoresCollection = self::getScoresWithUsersInRange($startDate, $endDate);
 
         return self::sortedScoresToScoreboard($scoresCollection, $title, false);
     }
