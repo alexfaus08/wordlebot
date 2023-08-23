@@ -29,3 +29,5 @@ Route::middleware([TwilioRequestValidation::class])->group(function () {
 // Frontend Routes
 Route::get('/score', [\App\Http\Controllers\ScoreController::class, 'index']);
 Route::get('/score/today', \App\Http\Controllers\TodayScoreController::class);
+
+Route::get('/leaderboard', [\App\Http\Controllers\LeaderboardController::class, 'index']);
