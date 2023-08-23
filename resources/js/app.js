@@ -1,8 +1,9 @@
+import '@vuepic/vue-datepicker/dist/main.css';
 import './bootstrap';
 import {createApp} from 'vue';
 import '../css/app.css';
+
 import VueDatePicker from '@vuepic/vue-datepicker';
-import '@vuepic/vue-datepicker/dist/main.css';
 
 import App from './views/App.vue';
 

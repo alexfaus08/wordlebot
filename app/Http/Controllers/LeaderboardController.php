@@ -19,16 +19,18 @@ class LeaderboardController extends Controller
 
         $from = Carbon::createFromFormat('m/d/Y', $data['from'])->setTime(0, 0);
         $to = Carbon::createFromFormat('m/d/Y', $data['to'])->setTime(23, 59, 59, 59);
+        $totalDays = $from->diffInDays($to) + 1;
 
         $usersWithScores = User::with(['scores' => function ($query) use ($from, $to) {
             $query->whereBetween('created_at', [$from, $to]);
         }])->get();
 
-        $scores = $usersWithScores->map(function ($user) {
+        $scores = $usersWithScores->map(function ($user) use ($totalDays) {
                 return [
                     'id' => $user->id,
                     'name' => $user->name,
-                    'total' => $user->scores->sum('value'),
+                    'totalDay' => $totalDays,
+                    'total' => $user->scores->sum('value') + 7*($totalDays - count($user->scores)),
                     'scores' => $user->scores->map(function ($score) {
                         return [
                             'id' => $score->id,
