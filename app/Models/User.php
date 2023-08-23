@@ -23,6 +23,8 @@ class User extends Authenticatable
         'phone_number',
     ];
 
+    protected $hidden = ['phone_number'];
+
     public function scores()
     {
         return $this->hasMany(Score::class);
