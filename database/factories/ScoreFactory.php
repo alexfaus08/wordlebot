@@ -22,10 +22,12 @@ class ScoreFactory extends Factory
         ];
     }
 
-    public function withUser(User $user)
+    public function withUser(User $user = null)
     {
+        $userId = $user ? $user->id : User::inRandomOrder()->first()->id;
+
         return $this->state([
-            'user_id' => $user->id,
+            'user_id' => $userId,
         ]);
     }
 }
