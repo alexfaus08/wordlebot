@@ -3,7 +3,6 @@ import {onMounted, ref} from 'vue';
 import dayjs from 'dayjs';
 import axios from 'axios';
 import VueDatePicker from '@vuepic/vue-datepicker';
-import '@vuepic/vue-datepicker/dist/main.css';
 
 const usersWithScores = ref();
 const from = dayjs().subtract(1, 'week');
@@ -66,7 +65,7 @@ onMounted(() => {
         :preset-dates="presetDates"
         @update:model-value="handleDateSelection"
       />
-      <table class="table">
+      <table class="table w-full">
         <thead>
           <tr>
             <td class="p-2 font-bold text-green-300">
