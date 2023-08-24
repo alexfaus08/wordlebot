@@ -8,6 +8,7 @@
 <body>
 <div id="app"></div>
 
-@vite('resources/js/app.js')
+@vite(['resources/css/app.css', 'resources/js/app.js'])
+<link rel="stylesheet" href="https://unpkg.com/@vuepic/vue-datepicker@latest/dist/main.css">
 </body>
 </html>

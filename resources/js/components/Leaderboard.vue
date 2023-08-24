@@ -3,7 +3,6 @@ import {computed, onMounted, ref} from 'vue';
 import dayjs from 'dayjs';
 import axios from 'axios';
 import VueDatePicker from '@vuepic/vue-datepicker';
-import '@vuepic/vue-datepicker/dist/main.css';
 
 const usersWithScores = ref();
 const from = dayjs().startOf('week').add(1, 'day');
