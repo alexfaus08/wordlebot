@@ -2,8 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Score;
+use App\Models\User;
 use App\Services\ScoreBoardGeneratorService;
 use App\Services\TwilioService;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class SendReminderToPlay extends Command
@@ -30,10 +33,13 @@ class SendReminderToPlay extends Command
     public function handle()
     {
         $twilioService = new TwilioService();
-        $scoreCalculator = new ScoreBoardGeneratorService();
-        $notYetPlayed = $scoreCalculator->getUsersWhoHaveNotPlayerToday();
+        $usersPlayedToday = Score::whereDate('created_at', Carbon::today())
+            ->select('user_id')
+            ->get();
+        $usersNotPlayedToday = User::whereNotIn('id', $usersPlayedToday)
+            ->get();
         $message = 'Don\'t forget to play Wordle today!'.'https://www.nytimes.com/games/wordle/index.html';
-        foreach ($notYetPlayed as $user) {
+        foreach ($usersNotPlayedToday as $user) {
             $twilioService->sendMessage($user->phone_number, $message);
         }
 
