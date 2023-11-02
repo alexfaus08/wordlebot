@@ -22,12 +22,12 @@ class TwilioService
         }
     }
 
-    public function sendScoreBoardMessage($to): string
+    public function sendScoreBoardMessage(User $user): string
     {
-        $scoreCalculator = new ScoreBoardGeneratorService();
-        $message = $scoreCalculator->getDailyScoreboardMessage();
+        $scoreCalculator = new FamilyScoreBoardGeneratorService($user);
+        $message = $scoreCalculator->getDailyScoreboardMessagesForAllFamilies();
 
-        $this->sendMessage($to, $message);
+        $this->sendMessage($user->phone_number, $message);
 
         return $message;
     }

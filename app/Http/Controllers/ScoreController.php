@@ -41,9 +41,9 @@ class ScoreController extends Controller
             $score->user()->associate($user);
             $score->save();
 
-            $twilioService->sendScoreBoardMessage($user->phone_number);
+            $message = $twilioService->sendScoreBoardMessage($user);
 
-            return \response('', Response::HTTP_CREATED);
+            return \response($message, Response::HTTP_CREATED);
         }
 
         return \response('User not found', Response::HTTP_NOT_FOUND);

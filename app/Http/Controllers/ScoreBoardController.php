@@ -22,7 +22,7 @@ class ScoreBoardController extends Controller
 
         if ($user) {
             $twilioService = new TwilioService();
-            $message = $twilioService->sendScoreBoardMessage($user->phone_number);
+            $message = $twilioService->sendScoreBoardMessage($user);
 
             return response($message, Response::HTTP_OK);
         }
