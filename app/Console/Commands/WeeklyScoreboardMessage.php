@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Models\User;
 use App\Services\FamilyScoreBoardGeneratorService;
-use App\Services\ScoreBoardGeneratorService;
 use App\Services\TwilioService;
 use Illuminate\Console\Command;
 
