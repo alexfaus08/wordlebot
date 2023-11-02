@@ -12,9 +12,9 @@ class LeaderboardController extends Controller
     public function index(Request $request)
     {
         $data = $request->validate([
-                'from' => ['required', 'date', 'date_format:m/d/Y'],
-                'to' => ['required', 'date', 'date_format:m/d/Y', 'after_or_equal:from']
-            ]
+            'from' => ['required', 'date', 'date_format:m/d/Y'],
+            'to' => ['required', 'date', 'date_format:m/d/Y', 'after_or_equal:from'],
+        ]
         );
 
         $from = Carbon::createFromFormat('m/d/Y', $data['from'])->setTime(0, 0);
@@ -26,19 +26,19 @@ class LeaderboardController extends Controller
         }])->get();
 
         $scores = $usersWithScores->map(function ($user) use ($totalDays) {
-                return [
-                    'id' => $user->id,
-                    'name' => $user->name,
-                    'totalDay' => $totalDays,
-                    'total' => $user->scores->sum('value') + 7*($totalDays - count($user->scores)),
-                    'scores' => $user->scores->map(function ($score) {
-                        return [
-                            'id' => $score->id,
-                            'value' => $score->value,
-                        ];
-                    }),
-                ];
-            });
+            return [
+                'id' => $user->id,
+                'name' => $user->name,
+                'totalDay' => $totalDays,
+                'total' => $user->scores->sum('value') + 7 * ($totalDays - count($user->scores)),
+                'scores' => $user->scores->map(function ($score) {
+                    return [
+                        'id' => $score->id,
+                        'value' => $score->value,
+                    ];
+                }),
+            ];
+        });
 
         $sorted = array_values(Arr::sort($scores, function (array $value) {
             return $value['total'];
