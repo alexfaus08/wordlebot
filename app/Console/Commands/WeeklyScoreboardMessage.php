@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Models\User;
+use App\Services\FamilyScoreBoardGeneratorService;
 use App\Services\ScoreBoardGeneratorService;
 use App\Services\TwilioService;
 use Illuminate\Console\Command;
@@ -29,10 +31,14 @@ class WeeklyScoreboardMessage extends Command
      */
     public function handle()
     {
-        $scoreCalculationService = new ScoreBoardGeneratorService();
-        $weeklyScoreboardMessage = $scoreCalculationService->getWeeklyScoreboardMessage();
+        $allUsers = User::all();
         $twilioService = new TwilioService();
-        $twilioService->sendMessageToEveryone($weeklyScoreboardMessage);
+        
+        foreach ($allUsers as $user) {
+            $scoreCalculationService = new FamilyScoreBoardGeneratorService($user);
+            $message = $scoreCalculationService->getWeeklyScoreboardMessagesForAllFamilies();
+            $twilioService->sendMessage($user->phone_number, $message);
+        }
 
         return 0;
     }
