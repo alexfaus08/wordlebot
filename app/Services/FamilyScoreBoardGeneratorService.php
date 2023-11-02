@@ -67,7 +67,10 @@ class FamilyScoreBoardGeneratorService
             if ($score->value !== $previousScore) {
                 $place += 1;
             }
-            $message .= $this->addOrdinalNumberSuffix($place).' - '.$score->user->name.' '.$score->value.PHP_EOL.'/6';
+            if ($score->value === 7) {
+                $score->value = 'X';
+            }
+            $message .= $this->addOrdinalNumberSuffix($place).' - '.$score->user->name.' '.$score->value.'/6'.PHP_EOL;
         }
         $message .= PHP_EOL.'Did not play yet: '.$userNamesWhoDidNotPlay->join(', ', ' and ');
 
