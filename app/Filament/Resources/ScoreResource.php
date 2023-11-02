@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ScoreResource\Pages;
-use App\Filament\Resources\ScoreResource\RelationManagers;
 use App\Models\Score;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -38,7 +37,7 @@ class ScoreResource extends Resource
                 Tables\Columns\TextColumn::make('value')
                     ->numeric(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->dateTime(),
             ])
             ->filters([
                 //
@@ -47,7 +46,7 @@ class ScoreResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->defaultSort('created_at', 'desc')
-        ->bulkActions([
+            ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),

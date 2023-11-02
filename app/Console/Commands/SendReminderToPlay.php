@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Models\Score;
 use App\Models\User;
-use App\Services\ScoreBoardGeneratorService;
 use App\Services\TwilioService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
