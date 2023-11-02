@@ -25,7 +25,7 @@ class FamilyScoreBoardGeneratorService
             $messages[] = $this->getDailyScoreboard($family);
         }
 
-        return implode(PHP_EOL.'---'.PHP_EOL, $messages);
+        return implode(PHP_EOL.PHP_EOL.'---'.PHP_EOL.PHP_EOL, $messages);
     }
 
     public function getWeeklyScoreboardMessagesForAllFamilies(): string
@@ -67,9 +67,9 @@ class FamilyScoreBoardGeneratorService
             if ($score->value !== $previousScore) {
                 $place += 1;
             }
-            $message .= $this->addOrdinalNumberSuffix($place).' '.$score->user->name.': '.$score->value.PHP_EOL;
+            $message .= $this->addOrdinalNumberSuffix($place).' - '.$score->user->name.' '.$score->value.PHP_EOL.'/6';
         }
-        $message .= 'Did not play yet: '.$userNamesWhoDidNotPlay->join(', ', ' and ');
+        $message .= PHP_EOL.'Did not play yet: '.$userNamesWhoDidNotPlay->join(', ', ' and ');
 
         return $message;
     }
