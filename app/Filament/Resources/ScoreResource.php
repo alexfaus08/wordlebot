@@ -22,6 +22,7 @@ class ScoreResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('user_id')
+                    ->required()
                     ->relationship('user', 'name'),
                 Forms\Components\TextInput::make('value')
                     ->numeric()
