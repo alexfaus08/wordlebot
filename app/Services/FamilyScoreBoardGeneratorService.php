@@ -15,14 +15,15 @@ class FamilyScoreBoardGeneratorService
         $this->user = $user;
     }
 
-    public function sendDailyScoreboardMessage()
+    public function getDailyScoreboardMessagesForAllFamilies()
     {
         $families = $this->user->families;
         $messages = [];
         foreach ($families as $family) {
             $messages[] = $this->getDailyScoreboard($family);
         }
-        dd($messages);
+
+        return join(PHP_EOL.'---'.PHP_EOL, $messages);
     }
 
     public function getDailyScoreboard(Family $family)
