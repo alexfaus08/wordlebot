@@ -33,7 +33,7 @@ class WeeklyScoreboardMessage extends Command
     {
         $allUsers = User::all();
         $twilioService = new TwilioService();
-        
+
         foreach ($allUsers as $user) {
             $scoreCalculationService = new FamilyScoreBoardGeneratorService($user);
             $message = $scoreCalculationService->getWeeklyScoreboardMessagesForAllFamilies();
