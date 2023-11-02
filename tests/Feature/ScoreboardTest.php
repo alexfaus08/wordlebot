@@ -2,8 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Models\Family;
 use App\Models\Score;
 use App\Models\User;
+use App\Services\FamilyScoreBoardGeneratorService;
 use App\Services\ScoreBoardGeneratorService;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -12,6 +14,7 @@ use Tests\TestCase;
 class ScoreboardTest extends TestCase
 {
     use RefreshDatabase;
+
     /**
      * A basic feature test example.
      *
@@ -113,5 +116,26 @@ Not played yet: Tempeh';
         $scoreboard = $scoreboardGen->getDailyScoreboardMessage();
 
         $this->assertEquals($expectedScoreboard, $scoreboard);
+    }
+
+    public function test_family_scoreboards()
+    {
+        $family1 = Family::factory()->create(['name' => 'Family 1']);
+        $family2 = Family::factory()->create(['name' => 'Family 2']);
+
+        $tofu = User::factory()->create(['name' => 'Tofu']);
+        $beyond = User::factory()->create(['name' => 'Beyond']);
+        $tempeh = User::factory()->create(['name' => 'Tempeh']);
+
+        $tofu->families()->attach($family1);
+        $tofu->families()->attach($family2);
+        $tempeh->families()->attach($family1);
+        $tempeh->families()->attach($family2);
+        $beyond->families()->attach($family1);
+
+        Score::factory()->withUser($tofu)->create(['value' => 3, 'created_at' => Carbon::now()]);
+
+        $scoreboardGen = new FamilyScoreBoardGeneratorService($tofu);
+        dd($scoreboardGen->getDailyScoreboardMessagesForAllFamilies());
     }
 }
