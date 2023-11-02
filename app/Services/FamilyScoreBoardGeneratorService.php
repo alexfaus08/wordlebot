@@ -25,7 +25,7 @@ class FamilyScoreBoardGeneratorService
             $messages[] = $this->getDailyScoreboard($family);
         }
 
-        return join(PHP_EOL.'---'.PHP_EOL, $messages);
+        return implode(PHP_EOL.'---'.PHP_EOL, $messages);
     }
 
     public function getWeeklyScoreboardMessagesForAllFamilies(): string
@@ -45,7 +45,7 @@ class FamilyScoreBoardGeneratorService
             $messages[] = $this->getWeeklyScoreboard($family, $startOfWeek, $endOfWeek);
         }
 
-        return join(PHP_EOL.'---'.PHP_EOL, $messages);
+        return implode(PHP_EOL.'---'.PHP_EOL, $messages);
     }
 
     public function getDailyScoreboard(Family $family): string
@@ -54,6 +54,7 @@ class FamilyScoreBoardGeneratorService
         $scores = $family->getSortedScoresForDate(Carbon::today());
         if ($scores->count() === 0) {
             $message .= 'No one has played today :(';
+
             return $message;
         }
 
@@ -82,9 +83,9 @@ class FamilyScoreBoardGeneratorService
 
         foreach ($familyUsers as $user) {
             $scores = Score::whereBetween('created_at', [$start, $end])
-                        ->where('user_id', $user->id)
-                        ->select('value')
-                        ->get();
+                ->where('user_id', $user->id)
+                ->select('value')
+                ->get();
             $missingDays = $totalDays - $scores->count();
             $penalties = $missingDays * 7;
             $weeklyScore = $scores->pluck('value')->sum() + $penalties;

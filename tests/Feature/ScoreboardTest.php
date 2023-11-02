@@ -136,13 +136,13 @@ Not played yet: Tempeh';
         Score::factory()->withUser($tofu)->create(['value' => 3, 'created_at' => Carbon::now()]);
 
         $scoreboardGen = new FamilyScoreBoardGeneratorService($tofu);
-        $expScoreboard = "Family 1 Scoreboard:
+        $expScoreboard = 'Family 1 Scoreboard:
 1st Tofu: 3
 Did not play yet: Tempeh and Beyond
 ---
 Family 2 Scoreboard:
 1st Tofu: 3
-Did not play yet: Tempeh";
+Did not play yet: Tempeh';
 
         $scoreboard = $scoreboardGen->getDailyScoreboardMessagesForAllFamilies();
         $this->assertEquals($expScoreboard, $scoreboard);
@@ -164,11 +164,11 @@ Did not play yet: Tempeh";
         $beyond->families()->attach($family1);
 
         $scoreboardGen = new FamilyScoreBoardGeneratorService($tofu);
-        $expScoreboard = "Family 1 Scoreboard:
+        $expScoreboard = 'Family 1 Scoreboard:
 No one has played today :(
 ---
 Family 2 Scoreboard:
-No one has played today :(";
+No one has played today :(';
 
         $scoreboard = $scoreboardGen->getDailyScoreboardMessagesForAllFamilies();
         $this->assertEquals($expScoreboard, $scoreboard);
