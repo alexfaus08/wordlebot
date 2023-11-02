@@ -31,14 +31,4 @@ class TwilioService
 
         return $message;
     }
-
-    public function sendMessageToEveryone(string $message): string
-    {
-        $allUsers = User::all();
-        foreach ($allUsers as $user) {
-            $this->sendMessage($user->phone_number, $message);
-        }
-
-        return $message;
-    }
 }
