@@ -19,7 +19,7 @@ class ScoreResource extends JsonResource
             'value' => $this->value,
             'user_name' => $this->user->name,
             'user_id' => $this->user->id,
-            'date' => $this->created_at
+            'date' => $this->created_at,
         ];
     }
 }
