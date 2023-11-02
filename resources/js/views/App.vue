@@ -8,7 +8,8 @@ import Leaderboard from '../components/Leaderboard.vue';
     <div class="my-10 text-4xl font-bold text-green-300">
       Family Scores
     </div>
-    <TodayScoreboard />
-    <Leaderboard />
+    <div class="text-lg text-green-50">
+      Under construction....
+    </div>
   </div>
 </template>
