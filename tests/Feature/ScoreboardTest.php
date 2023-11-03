@@ -33,16 +33,58 @@ class ScoreboardTest extends TestCase
 
         $scoreboardGen = new FamilyScoreBoardGeneratorService($tofu);
         $expScoreboard = 'Family 1 Scoreboard:
-1st Tofu: 3
+1st - Tofu 3/6
+
 Did not play yet: Tempeh and Beyond
+
 ---
+
 Family 2 Scoreboard:
-1st Tofu: 3
+1st - Tofu 3/6
+
 Did not play yet: Tempeh';
 
         $scoreboard = $scoreboardGen->getDailyScoreboardMessagesForAllFamilies();
         $this->assertEquals($expScoreboard, $scoreboard);
     }
+
+    public function test_family_daily_scoreboards_with_ties()
+    {
+        $family1 = Family::factory()->create(['name' => 'Family 1']);
+        $family2 = Family::factory()->create(['name' => 'Family 2']);
+
+        $tofu = User::factory()->create(['name' => 'Tofu']);
+        $beyond = User::factory()->create(['name' => 'Beyond']);
+        $tempeh = User::factory()->create(['name' => 'Tempeh']);
+
+        $tofu->families()->attach($family1);
+        $tofu->families()->attach($family2);
+        $tempeh->families()->attach($family1);
+        $tempeh->families()->attach($family2);
+        $beyond->families()->attach($family1);
+
+        Score::factory()->withUser($tofu)->create(['value' => 3, 'created_at' => Carbon::now()]);
+        Score::factory()->withUser($tempeh)->create(['value' => 3, 'created_at' => Carbon::now()]);
+        Score::factory()->withUser($beyond)->create(['value' => 4, 'created_at' => Carbon::now()]);
+
+        $scoreboardGen = new FamilyScoreBoardGeneratorService($tofu);
+        $expScoreboard = 'Family 1 Scoreboard:
+1st - Tofu 3/6
+1st - Tempeh 3/6
+2nd - Beyond 4/6
+
+
+---
+
+Family 2 Scoreboard:
+1st - Tofu 3/6
+1st - Tempeh 3/6
+';
+
+        $scoreboard = $scoreboardGen->getDailyScoreboardMessagesForAllFamilies();
+        $this->assertEquals($expScoreboard, $scoreboard);
+    }
+
 
     public function test_family_daily_scoreboards_empty()
     {
@@ -62,7 +104,9 @@ Did not play yet: Tempeh';
         $scoreboardGen = new FamilyScoreBoardGeneratorService($tofu);
         $expScoreboard = 'Family 1 Scoreboard:
 No one has played today :(
+
 ---
+
 Family 2 Scoreboard:
 No one has played today :(';
 

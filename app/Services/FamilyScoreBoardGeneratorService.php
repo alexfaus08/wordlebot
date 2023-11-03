@@ -70,9 +70,13 @@ class FamilyScoreBoardGeneratorService
             if ($score->value === 7) {
                 $score->value = 'X';
             }
+            $previousScore = $score->value;
+
             $message .= $this->addOrdinalNumberSuffix($place).' - '.$score->user->name.' '.$score->value.'/6'.PHP_EOL;
         }
-        $message .= PHP_EOL.'Did not play yet: '.$userNamesWhoDidNotPlay->join(', ', ' and ');
+        if ($userNamesWhoDidNotPlay->count() > 0) {
+            $message .= PHP_EOL.'Did not play yet: '.$userNamesWhoDidNotPlay->join(', ', ' and ');
+        }
 
         return $message;
     }
@@ -105,6 +109,8 @@ class FamilyScoreBoardGeneratorService
             if ($weeklyScore['value'] !== $previousScore) {
                 $place += 1;
             }
+            $previousScore = $weeklyScore['value'];
+
             $message .= $this->addOrdinalNumberSuffix($place).' '.$weeklyScore['name'].': '.$weeklyScore['value'].PHP_EOL;
         }
 
