@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TwilioRequest;
-use App\Http\Resources\ScoreResource;
 use App\Models\Score;
 use App\Models\User;
 use App\Services\TwilioService;
@@ -12,11 +11,6 @@ use Illuminate\Http\Response;
 
 class ScoreController extends Controller
 {
-    public function index()
-    {
-        return ScoreResource::collection(Score::all());
-    }
-
     public function store(TwilioRequest $request)
     {
         $twilioService = new TwilioService();
