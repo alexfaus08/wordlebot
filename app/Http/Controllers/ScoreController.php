@@ -9,7 +9,6 @@ use App\Models\User;
 use App\Services\TwilioService;
 use Carbon\Carbon;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Log;
 
 class ScoreController extends Controller
 {
@@ -23,7 +22,6 @@ class ScoreController extends Controller
         $twilioService = new TwilioService();
         $data = $request->validated();
         $user = User::where('phone_number', $data['from'])->first();
-        Log::info($data['body']);
         if ($user) {
             $todaysScores = $user->scores()->whereDate('created_at', Carbon::today())->get();
             if (count($todaysScores) > 0) {
@@ -34,12 +32,10 @@ class ScoreController extends Controller
             // Split the Wordle score and get the 'Wordle ### X/6' line
             $wordleLines = explode(PHP_EOL, $data['body']);
             $scoreLine = explode(' ', $wordleLines[0])[2];
-            Log::info($scoreLine);
 
             // The score is the number before the slash
             $scoreCount = $scoreLine[0];
             $scoreValue = $scoreCount === 'X' ? 7 : $scoreCount;
-            Log::info($scoreValue);
 
             $score = new Score(['value' => $scoreValue, 'full_score' => $data['body']]);
             $score->user()->associate($user);
