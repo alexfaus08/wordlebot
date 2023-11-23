@@ -3,9 +3,9 @@
 </script>
 
 <template>
-  <div>
+  <button class="btn">
     Hi :)
-  </div>
+  </button>
 </template>
 
 <style scoped>
