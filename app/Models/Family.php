@@ -23,6 +23,7 @@ class Family extends Model
     {
         return Score::whereDate('created_at', $date)
             ->whereIn('user_id', $this->users->pluck('id'))
+            ->with('user:id,name')
             ->orderBy('value')
             ->get();
     }
