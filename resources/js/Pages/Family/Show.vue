@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import dayjs from 'dayjs';
+
 defineProps<{
     name: string,
     scores: array
@@ -16,7 +18,7 @@ defineProps<{
       >
         <div class="chat-header">
           {{ score.user.name }}
-          <time class="text-xs opacity-50">{{ score.created_at }}</time>
+          <time class="text-xs opacity-50">{{ dayjs(score.created_at).format('hh:mm A') }}</time>
         </div>
         <div class="chat-bubble whitespace-pre">
           {{ score.full_score }}
