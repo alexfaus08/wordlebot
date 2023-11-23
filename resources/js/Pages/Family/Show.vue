@@ -6,11 +6,23 @@ defineProps<{
 </script>
 
 <template>
-  <div>
+  <div class="container mx-auto flex flex-col items-center gap-16 p-16">
     {{ name }}
-    <pre>
-    {{ scores[0].full_score }}
-      </pre>
+    <div class="mx-auto grid w-fit grid-cols-3 gap-x-16 gap-y-8">
+      <div
+        v-for="score in scores"
+        :key="score.id"
+        class="chat chat-start"
+      >
+        <div class="chat-header">
+          {{ score.user.name }}
+          <time class="text-xs opacity-50">{{ score.created_at }}</time>
+        </div>
+        <div class="chat-bubble whitespace-pre">
+          {{ score.full_score }}
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
