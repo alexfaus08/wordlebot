@@ -9,7 +9,9 @@ defineProps<{
 
 <template>
   <div class="container mx-auto flex flex-col items-center gap-16 p-16">
-    {{ name }}
+    <h2 class="text-3xl font-bold text-primary">
+      {{ name }}
+    </h2>
     <div class="mx-auto grid w-fit grid-cols-3 gap-x-16 gap-y-8">
       <div
         v-for="score in scores"
