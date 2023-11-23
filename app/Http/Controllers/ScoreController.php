@@ -22,7 +22,6 @@ class ScoreController extends Controller
         $twilioService = new TwilioService();
         $data = $request->validated();
         $user = User::where('phone_number', $data['from'])->first();
-        dd($data['body']);
         if ($user) {
             $todaysScores = $user->scores()->whereDate('created_at', Carbon::today())->get();
             if (count($todaysScores) > 0) {
