@@ -5,6 +5,14 @@ defineProps<{
     name: string,
     scores: array
 }>();
+
+function reformatWordle(input: string): string {
+    const lines = input.split(' ');
+    const header = lines.slice(0, 3).join(' ');
+    const scoreBlocks = lines.slice(4).join('\n');
+
+    return header + '\n\n' + scoreBlocks;
+}
 </script>
 
 <template>
@@ -27,7 +35,7 @@ defineProps<{
           <time class="text-xs opacity-50">{{ dayjs(score.created_at).format('hh:mm A') }}</time>
         </div>
         <div class="chat-bubble whitespace-pre py-4 pl-4 pr-8">
-          {{ score.full_score }}
+          {{ reformatWordle(score.full_score) }}
         </div>
       </div>
     </div>
