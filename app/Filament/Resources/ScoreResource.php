@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ScoreResource\Pages;
 use App\Models\Score;
 use Filament\Forms;
+use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -26,6 +27,7 @@ class ScoreResource extends Resource
                 Forms\Components\TextInput::make('value')
                     ->numeric()
                     ->required(),
+                MarkdownEditor::make('full_score')
             ]);
     }
 
