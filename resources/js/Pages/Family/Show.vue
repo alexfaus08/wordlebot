@@ -24,7 +24,7 @@ function reformatWordle(input: string): string {
       </span>
       score today?
     </h2>
-    <div class="mx-auto grid w-fit grid-cols-2 items-start gap-x-16 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
+    <div class="mx-auto grid w-fit grid-cols-1 items-start gap-x-16 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
       <div
         v-for="score in scores"
         :key="score.id"

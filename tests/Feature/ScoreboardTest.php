@@ -36,6 +36,7 @@ class ScoreboardTest extends TestCase
 1st - Tofu 3/6
 
 Did not play yet: Tempeh and Beyond
+
 View family score blocks here: https://familyscores.com/family/'.$family1->id.'
 
 ---
@@ -44,6 +45,7 @@ Family 2 Scoreboard:
 1st - Tofu 3/6
 
 Did not play yet: Tempeh
+
 View family score blocks here: https://familyscores.com/family/'.$family2->id;
 
         $scoreboard = $scoreboardGen->getDailyScoreboardMessagesForAllFamilies();
@@ -75,6 +77,7 @@ View family score blocks here: https://familyscores.com/family/'.$family2->id;
 1st - Tempeh 3/6
 2nd - Beyond 4/6
 
+
 View family score blocks here: https://familyscores.com/family/'.$family1->id.'
 
 ---
@@ -82,6 +85,7 @@ View family score blocks here: https://familyscores.com/family/'.$family1->id.'
 Family 2 Scoreboard:
 1st - Tofu 3/6
 1st - Tempeh 3/6
+
 
 View family score blocks here: https://familyscores.com/family/'.$family2->id;
 
