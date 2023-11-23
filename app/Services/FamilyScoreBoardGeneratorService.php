@@ -78,6 +78,8 @@ class FamilyScoreBoardGeneratorService
             $message .= PHP_EOL.'Did not play yet: '.$userNamesWhoDidNotPlay->join(', ', ' and ');
         }
 
+        $message .= PHP_EOL.'View family score blocks here: https://familyscores.com/family/'.$family->id;
+
         return $message;
     }
 
