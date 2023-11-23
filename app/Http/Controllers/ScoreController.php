@@ -37,7 +37,7 @@ class ScoreController extends Controller
             $scoreCount = $scoreLine[0];
             $scoreValue = $scoreCount === 'X' ? 7 : $scoreCount;
 
-            $score = new Score(['value' => $scoreValue]);
+            $score = new Score(['value' => $scoreValue, 'full_score' => $data['body']]);
             $score->user()->associate($user);
             $score->save();
 
