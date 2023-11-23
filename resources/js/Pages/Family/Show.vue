@@ -9,20 +9,24 @@ defineProps<{
 
 <template>
   <div class="container mx-auto flex flex-col items-center gap-16 p-16">
-    <h2 class="text-3xl font-bold text-primary">
-      {{ name }}
+    <h2 class="text-3xl font-bold">
+      What did the
+      <span class="text-primary">
+        {{ name }}
+      </span>
+      score today?
     </h2>
-    <div class="mx-auto grid w-fit grid-cols-3 gap-x-16 gap-y-8">
+    <div class="mx-auto grid w-fit grid-cols-3 items-start gap-x-16 gap-y-8">
       <div
         v-for="score in scores"
         :key="score.id"
         class="chat chat-start"
       >
-        <div class="chat-header">
+        <div class="chat-header pl-2">
           {{ score.user.name }}
           <time class="text-xs opacity-50">{{ dayjs(score.created_at).format('hh:mm A') }}</time>
         </div>
-        <div class="chat-bubble whitespace-pre">
+        <div class="chat-bubble whitespace-pre py-4 pl-4 pr-8">
           {{ score.full_score }}
         </div>
       </div>
