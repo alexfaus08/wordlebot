@@ -3,9 +3,9 @@
 </script>
 
 <template>
-  <button class="btn">
-    Hi :)
-  </button>
+  <div class="m-auto w-fit p-24 text-2xl">
+    Under construction...
+  </div>
 </template>
 
 <style scoped>
