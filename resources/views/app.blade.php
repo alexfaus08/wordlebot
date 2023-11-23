@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Family Scores</title>
+    @inertiaHead
 </head>
 <body>
-<div id="app"></div>
-
+@inertia
 @vite(['resources/css/app.css', 'resources/js/app.js'])
-<link rel="stylesheet" href="https://unpkg.com/@vuepic/vue-datepicker@latest/dist/main.css">
+<div id="app"></div>
 </body>
 </html>
