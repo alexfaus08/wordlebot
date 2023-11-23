@@ -15,3 +15,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::inertia('/', 'Welcome');
 
+Route::get('/family/{family}', [\App\Http\Controllers\FamilyController::class, 'show']);
+
